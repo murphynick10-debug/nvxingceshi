@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>探索你的专属女性力量原型</title>
+    <style>
+        /* * 终版CSS：更大气、更高级的布局
+         * 色系: 奶油白(#FBFBF9), 雾霾蓝(#8FA8B8), 强调色(#9F8B8C)
+         */
+
+        :root {
+            --bg-color: #FBFBF9;
+            --primary-color: #8FA8B8;
+            --accent-color: #9F8B8C;
+            --text-color: #3D3D3D;
+            --light-gray: #EAEAEA;
+            --border-color: #DDD;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* 升级：容器放大 */
+        .container {
+            max-width: 750px; /* 从500px 放大到 750px */
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            padding: 40px; /* 增加内边距 */
+            box-sizing: border-box;
+            transition: opacity 0.5s ease;
+        }
+
+        /* 1. 欢迎屏幕 */
+        #start-screen {
+            text-align: center;
+        }
+
+        #start-screen h1 {
+            color: var(--accent-color);
+            font-size: 28px; /* 放大 */
+            margin-bottom: 20px;
+        }
+
+        #start-screen p {
+            font-size: 17px; /* 放大 */
+            line-height: 1.8;
+            margin-bottom: 35px;
+            color: #555;
+        }
+
+        .start-btn {
+            display: inline-block;
+            width: 60%;
+            padding: 18px; /* 放大 */
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 20px; /* 放大 */
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(159, 139, 140, 0.3);
+        }
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(159, 139, 140, 0.4);
+        }
+
+        /* 2. 答题屏幕 */
+        #quiz-screen {
+            display: none;
+        }
+
+        #progress-container {
+            width: 100%;
+            background-color: var(--light-gray);
+            border-radius: 10px;
+            height: 12px; /* 加粗 */
+            margin-bottom: 20px;
+        }
+
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        #progress-text {
+            text-align: center;
+            font-size: 16px; /* 放大 */
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        #question-container {
+            min-height: 250px; 
+        }
+        
+        .question-text {
+            font-size: 22px; /* 放大 */
+            font-weight: 600;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        /* 升级：4选项按钮 */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* 依然单列，更专注 */
+            gap: 15px;
+        }
+
+        .option-btn {
+            display: block;
+            width: 100%;
+            padding: 18px; /* 放大 */
+            background-color: #FBFBF9;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 17px; /* 放大 */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            text-align: left;
+        }
+        .option-btn:hover {
+            background-color: #f0f4f7;
+            border-color: var(--primary-color);
+            transform: scale(1.01);
+        }
+        
+        .fade-out { opacity: 0; transition: opacity 0.3s ease-out; }
+        .fade-in { opacity: 1; transition: opacity 0.3s ease-in; }
+
+        /* 3. 结果屏幕 */
+        #result-screen {
+            display: none;
+            text-align: left;
+        }
+
+        #result-title {
+            color: var(--accent-color);
+            font-size: 28px; /* 放大 */
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .result-section {
+            background-color: #FDFDFB;
+            border: 1px solid #f0f0f0;
+            border-radius: 15px;
+            padding: 25px; /* 放大 */
+            margin-bottom: 25px;
+        }
+
+        .result-section h3 {
+            color: var(--primary-color);
+            font-size: 20px; /* 放大 */
+            font-weight: 600;
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 12px;
+            margin-top: 0;
+        }
+
+        .spectrum-item { margin-bottom: 20px; }
+        .spectrum-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px; /* 放大 */
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .dim-name { color: var(--text-color); }
+        .dim-value { color: var(--accent-color); font-weight: 600; }
+        
+        .spectrum-bar-bg {
+            width: 100%;
+            height: 14px; /* 加粗 */
+            background-color: var(--light-gray);
+            border-radius: 7px;
+        }
+        .spectrum-bar-fill {
+            height: 100%;
+            border-radius: 7px;
+            transition: width 1s ease-out;
+        }
+        .spectrum-bar-fill[data-dim="e"] { background: linear-gradient(90deg, #8FA8B8, #B8B08F); }
+        .spectrum-bar-fill[data-dim="t"] { background: linear-gradient(90deg, #B0B0B0, #D98B9C); }
+        .spectrum-bar-fill[data-dim="j"] { background: linear-gradient(90deg, #9F8B8C, #A0B88F); }
+
+
+        .result-section p, .result-section ul {
+            font-size: 17px; /* 放大 */
+            line-height: 1.8;
+            color: #444;
+        }
+        .result-section ul { padding-left: 25px; }
+        .result-section li { margin-bottom: 12px; }
+
+        /* 新增：重新测试按钮 */
+        .restart-btn {
+            display: block;
+            width: 50%;
+            margin: 40px auto 10px auto;
+            padding: 16px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .restart-btn:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div id="start-screen">
+            <h1>✨ 探索你的专属女性力量原型 ✨</h1>
+            <p>这是一个专为女性设计的深度性格分析。我们将通过45道专业题目，从“能量场”、“决策轴”、“生活态”3个核心维度，找到你独一无二的内在原型，并为你提供一份包含6大模块的深度报告。</p>
+            <p>准备好认识真正的自己了吗？</p>
+            <button class="start-btn" onclick="startQuiz()">开始探索</button>
+        </div>
+
+        <div id="quiz-screen">
+            <div id="progress-text"></div>
+            <div id="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+            
+            <div id="question-container">
+                </div>
+        </div>
+
+        <div id="result-screen">
+            <h2 id="result-title"></h2>
+
+            <div class="result-section">
+                <h3>你的性格光谱</h3>
+                <div id="spectrum-chart"></div>
+            </div>
+
+            <div class="result-section">
+                <h3>你的三维解析</h3>
+                <div id="result-analysis"></div>
+            </div>
+
+            <div class="result-section">
+                <h3>你的深度灵魂画像</h3>
+                <div id="result-description"></div>
+            </div>
+            
+            <div class="result-section">
+                <h3>你的亲密关系风格</h3>
+                <div id="result-love"></div>
+            </div>
+            
+            <div class="result-section">
+                <h3>你的职场协作原型</h3>
+                <div id="result-work"></div>
+            </div>
+
+            <div class="result-section">
+                <h3>你的自保锦囊</h3>
+                <div id="result-kit"></div>
+            </div>
+
+            <button class="restart-btn" onclick="restartQuiz()">重新测试一次</button>
+        </div>
+    </div>
+
+<script>
+// ===========================================
+// JavaScript 核心逻辑 (45题版)
+// ===========================================
+
+// 1. 题库 (共45题, 15x3)
+// 计分: v: -2 (非常A), -1 (比较A), +1 (比较B), +2 (非常B)
+const questions = [
+    // --- 维度E: 能量场 (I: -2/-1, E: +1/+2) --- (15题)
+    { q: "一场大型社交聚会后，你通常感觉？", dim: 'e', a: [
+        { t: "筋疲力尽，必须立刻独处回血", v: -2 },
+        { t: "有点累，但还行", v: -1 },
+        { t: "很开心，甚至有点意犹未尽", v: 1 },
+        { t: "超级兴奋，能量爆棚，想去下半场", v: 2 }
+    ]},
+    { q: "当需要专注时，你更喜欢？", dim: 'e', a: [
+        { t: "绝对安静、独立的空间", v: -2 },
+        { t: "有点背景音的咖啡馆", v: -1 },
+        { t: "热闹的公共空间，但不被打扰", v: 1 },
+        { t: "和别人一起在办公室/自习室", v: 2 }
+    ]},
+    { q: "在团队中，你倾向于？", dim: 'e', a: [
+        { t: "基本只听，深入思考后再发言", v: -2 },
+        { t: "先倾听，被问到时再发表意见", v: -1 },
+        { t: "会主动发言，参与讨论", v: 1 },
+        { t: "积极引导话题，在讨论中碰撞想法", v: 2 }
+    ]},
+    { q: "你的交友模式更接近？", dim: 'e', a: [
+        { t: "拥有1-2个深交的灵魂知己", v: -2 },
+        { t: "有几个好朋友，圈子不大", v: -1 },
+        { t: "朋友挺多，和不同圈子的人玩", v: 1 },
+        { t: "朋友遍天下，是社交中心", v: 2 }
+    ]},
+    { q: "周末的完美设想是？", dim: 'e', a: [
+        { t: "完全宅家，看书、看剧，享受独处", v: -2 },
+        { t: "大部分时间独处，可能见一个朋友", v: -1 },
+        { t: "安排1-2场聚会，但也需要休息", v: 1 },
+        { t: "安排得满满当当，和朋友见面", v: 2 }
+    ]},
+    { q: "面对陌生人，你的第一反应？", dim: 'e', a: [
+        { t: "非常拘谨，不知所措", v: -2 },
+        { t: "有点慢热，需要时间预热", v: -1 },
+        { t: "比较大方，能正常打招呼", v: 1 },
+        { t: "非常自如，能快速聊起来", v: 2 }
+    ]},
+    { q: "处理复杂问题时，你更倾向于？", dim: 'e', a: [
+        { t: "自己关起门来深度思考", v: -2 },
+        { t: "先自己想，再找一两个人讨论", v: -1 },
+        { t: "边想边和别人讨论", v: 1 },
+        { t: "立刻召集大家头脑风暴", v: 2 }
+    ]},
+    { q: "在工作/学习中，你更喜欢？", dim: 'e', a: [
+        { t: "独立完成所有任务", v: -2 },
+        { t: "独立工作，但定期同步", v: -1 },
+        { t: "和他人紧密协作", v: 1 },
+        { t: "在团队中领导和协调", v: 2 }
+    ]},
+    { q: "你更愿意被描述为？", dim: 'e', a: [
+        { t: "沉静、有深度", v: -2 },
+        { t: "内敛、有思想", v: -1 },
+        { t: "开朗、有活力", v: 1 },
+        { t: "热情、有感染力", v: 2 }
+    ]},
+    { q: "你的“话痨”程度？", dim: 'e', a: [
+        { t: "非常沉默，惜字如金", v: -2 },
+        { t: "只和熟人聊得多", v: -1 },
+        { t: "在熟悉的环境中很能聊", v: 1 },
+        { t: "在任何地方都是话痨", v: 2 }
+    ]},
+    { q: "关于“出风头”？", dim: 'e', a: [
+        { t: "极力避免，只想在角落", v: -2 },
+        { t: "不太喜欢，但必要时也行", v: -1 },
+        { t: "不介意，有时还挺享受", v: 1 },
+        { t: "非常享受成为全场焦点", v: 2 }
+    ]},
+    { q: "接听电话对你来说？", dim: 'e', a: [
+        { t: "是种折磨，非常抗拒", v: -2 },
+        { t: "更喜欢发文字，但电话也行", v: -1 },
+        { t: "还行，打电话挺方便", v: 1 },
+        { t: "很喜欢，比发文字高效", v: 2 }
+    ]},
+    { q: "你的想法更多产生于？", dim: 'e', a: [
+        { t: "深度独处和内省", v: -2 },
+        { t: "安静的思考和阅读", v: -1 },
+        { t: "与他人的交流碰撞", v: 1 },
+        { t: "在外部世界行动和体验", v: 2 }
+    ]},
+    { q: "你倾向于？", dim: 'e', a: [
+        { t: "更关注自己的内心世界", v: -2 },
+        { t: "比较关注内心，也看重外部", v: -1 },
+        { t: "比较关注外部，也看重内心", v: 1 },
+        { t: "更关注外部的人和事", v: 2 }
+    ]},
+    { q: "你的理想居所？", dim: 'e', a: [
+        { t: "远离人群的隐秘小屋", v: -2 },
+        { t: "安静的郊区，邻里和睦", v: -1 },
+        { t: "便利的市区，生活气息浓", v: 1 },
+        { t: "繁华的市中心，楼下就是一切", v: 2 }
+    ]},
+
+    // --- 维度T: 决策轴 (F: -2/-1, T: +1/+2) --- (15题)
+    { q: "朋友向你哭诉一个难题，你第一反应？", dim: 't', a: [
+        { t: "立刻共情，先给她一个拥抱", v: -2 },
+        { t: "先安慰，再慢慢引导她", v: -1 },
+        { t: "先听，然后帮她分析问题", v: 1 },
+        { t: "立刻指出问题根源，给解决方案", v: 2 }
+    ]},
+    { q: "做重大决定时，你更依赖？", dim: 't', a: [
+        { t: "内心的感受和“直觉”", v: -2 },
+        { t: "个人的价值观和原则", v: -1 },
+        { t: "客观的事实和利弊分析", v: 1 },
+        { t: "纯粹的逻辑和数据", v: 2 }
+    ]},
+    { q: "你认为在工作中，什么更重要？", dim: 't', a: [
+        { t: "团队和谐，大家开心最重要", v: -2 },
+        { t: "人际关系，互相体谅", v: -1 },
+        { t: "公平的规则和清晰的流程", v: 1 },
+        { t: "效率至上，必须达成目标", v: 2 }
+    ]},
+    { q: "你更受不了哪种批评？", dim: 't', a: [
+        { t: "“你这人太冷漠，不近人情”", v: -2 },
+        { t: "“你没有考虑到我的感受”", v: -1 },
+        { t: "“你这个分析不合逻辑”", v: 1 },
+        { t: "“你这人太感情用事，不专业”", v: 2 }
+    ]},
+    { q: "你看电影时，更容易被什么打动？", dim: 't', a: [
+        { t: "角色的情感命运，经常看哭", v: -2 },
+        { t: "人与人之间的情感张力", v: -1 },
+        { t: "精妙的剧情和逻辑", v: 1 },
+        { t: "深刻的哲理和世界观设定", v: 2 }
+    ]},
+    { q: "你是否容易察觉到他人情绪的微妙变化？", dim: 't', a: [
+        { t: "是的，我非常敏感，甚至过度解读", v: -2 },
+        { t: "比较容易，能察觉到氛围变化", v: -1 },
+        { t: "不太容易，除非对方很明显", v: 1 },
+        { t: "非常迟钝，经常get不到", v: 2 }
+    ]},
+    { q: "你更认同？", dim: 't', a: [
+        { t: "共情是最高级的智慧", v: -2 },
+        { t: "理解比评判更重要", v: -1 },
+        { t: "真相和原则高于一切", v: 1 },
+        { t: "理性是最高级的智慧", v: 2 }
+    ]},
+    { q: "当别人（非亲近的人）反对你时？", dim: 't', a: [
+        { t: "很难过，会自我怀疑很久", v: -2 },
+        { t: "有点不舒服，但会反思", v: -1 },
+        { t: "就事论事，分析对方的逻辑", v: 1 },
+        { t: "无所谓，甚至享受辩论", v: 2 }
+    ]},
+    { q: "你对“真相”的态度？", dim: 't', a: [
+        { t: "有时“善意的谎言”更好", v: -2 },
+        { t: "说话会“看人下菜碟”", v: -1 },
+        { t: "倾向于坦诚，但会注意方式", v: 1 },
+        { t: "必须100%诚实，哪怕伤人", v: 2 }
+    ]},
+    { q: "你做决定的风格？", dim: 't', a: [
+        { t: "非常纠结，极度依赖他人意见", v: -2 },
+        { t: "会考虑很久，平衡各方感受", v: -1 },
+        { t: "有主见，会参考事实", v: 1 },
+        { t: "极其果断，相信自己的判断", v: 2 }
+    ]},
+    { q: "你更擅长？", dim: 't', a: [
+        { t: "安慰和疗愈他人", v: -2 },
+        { t: "协调和维护关系", v: -1 },
+        { t: "分析和解决问题", v: 1 },
+        { t: "批评和指出错误", v: 2 }
+    ]},
+    { q: "你更喜欢哪种赞美？", dim: 't', a: [
+        { t: "“你真好/真善良”", v: -2 },
+        { t: "“和你在一起很舒服”", v: -1 },
+        { t: "“你分析得真有道理”", v: 1 },
+        { t: "“你真聪明/能力真强”", v: 2 }
+    ]},
+    { q: "面对冲突？", dim: 't', a: [
+        { t: "极力避免，会立刻妥协", v: -2 },
+        { t: "不喜欢冲突，会想办法“和稀泥”", v: -1 },
+        { t: "不主动惹事，但会摆事实讲道理", v: 1 },
+        { t: "直面冲突，认为这是解决问题的方式", v: 2 }
+    ]},
+    { q: "评价一个作品时，你更看重？", dim: 't', a: [
+        { t: "它带给我的情感冲击", v: -2 },
+        { t: "它的人文关怀和温度", v: -1 },
+        { t: "它的技术、结构和逻辑性", v: 1 },
+        { t: "它的创新性和颠覆性", v: 2 }
+    ]},
+    { q: "你认为？", dim: 't', a: [
+        { t: "世界是靠“爱”运转的", v: -2 },
+        { t: "“人情”比“规则”重要", v: -1 },
+        { t: "“规则”比“人情”重要", v: 1 },
+        { t: "世界是靠“逻辑”运转的", v: 2 }
+    ]},
+
+    // --- 维度J: 生活态 (P: -2/-1, J: +1/+2) --- (15题)
+    { q: "去旅行前，你倾向于？", dim: 'j', a: [
+        { t: "基本不规划，随心所欲", v: -2 },
+        { t: "只定机票酒店，随性探索", v: -1 },
+        { t: "会做个大致的攻略和路线", v: 1 },
+        { t: "做好详细到小时的Excel攻略", v: 2 }
+    ]},
+    { q: "你的办公桌或房间通常是？", dim: 'j', a: [
+        { t: "非常随性，甚至有点乱", v: -2 },
+        { t: "随性堆放，但在混乱中自有秩序", v: -1 },
+        { t: "比较整洁，东西会归位", v: 1 },
+        { t: "极其整洁，所有东西都有固定位置", v: 2 }
+    ]},
+    { q: "面对一个新任务，你？", dim: 'j', a: [
+        { t: "凭感觉先动手试试", v: -2 },
+        { t: "先动手，在过程中调整", v: -1 },
+        { t: "先想个大概框架再开始", v: 1 },
+        { t: "必须制定详细计划再开始", v: 2 }
+    ]},
+    { q: "你更享受？", dim: 'j', a: [
+        { t: "探索任务时的“进行中”状态", v: -2 },
+        { t: "过程中的新发现和灵活性", v: -1 },
+        { t: "按部就班推进的“掌控感”", v: 1 },
+        { t: "完成任务后“打勾”的瞬间", v: 2 }
+    ]},
+    { q: "如果一个计划突然被打乱，你感觉？", dim: 'j', a: [
+        { t: "无所谓，甚至有点小兴奋", v: -2 },
+        { t: "还好，正好看看新的可能性", v: -1 },
+        { t: "有点不爽，但会立刻适应", v: 1 },
+        { t: "非常焦虑，极度讨厌失控", v: 2 }
+    ]},
+    { q: "在截止日期(DDL)前？", dim: 'j', a: [
+        { t: "最后一刻灵感和效率最高", v: -2 },
+        { t: "不拖到最后一天不动手", v: -1 },
+        { t: "会提前几天开始做", v: 1 },
+        { t: "喜欢提前很久完成，讨厌压线", v: 2 }
+    ]},
+    { q: "你更喜欢？", dim: 'j', a: [
+        { t: "开放的、充满可能的未来", v: -2 },
+        { t: "灵活的、可调整的选项", v: -1 },
+        { t: "清晰的、有结构的目标", v: 1 },
+        { t: "确定的、可预期的未来", v: 2 }
+    ]},
+    { q: "你的购物习惯？", dim: 'j', a: [
+        { t: "随心所欲，看到喜欢的就买", v: -2 },
+        { t: "会冲动消费，但有大致预算", v: -1 },
+        { t: "有购物清单，但会临时加项", v: 1 },
+        { t: "严格按购物清单，货比三家", v: 2 }
+    ]},
+    { q: "“说走就走”的旅行？", dim: 'j', a: [
+        { t: "太棒了，这正是我想要的", v: -2 },
+        { t: "听起来不错，可以试试", v: -1 },
+        { t: "有点冒险，我得先查查", v: 1 },
+        { t: "无法接受，必须规划好", v: 2 }
+    ]},
+    { q: "你的生活节奏？", dim: 'j', a: [
+        { t: "完全跟着感觉走", v: -2 },
+        { t: "比较随性，不喜欢日程表", v: -1 },
+        { t: "有大致的日程，但会调整", v: 1 },
+        { t: "有严格的每日时间表", v: 2 }
+    ]},
+    { q: "当事情“悬而未决”时？", dim: 'j', a: [
+        { t: "很享受这种开放性", v: -2 },
+        { t: "没什么感觉", v: -1 },
+        { t: "有点难受，希望快点定下来", v: 1 },
+        { t: "极度焦虑，必须立刻要个结果", v: 2 }
+    ]},
+    { q: "你更倾向于？", dim: 'j', a: [
+        { t: "即兴发挥", v: -2 },
+        { t: "适应变化", v: -1 },
+        { t: "提前准备", v: 1 },
+        { t: "掌控全局", v: 2 }
+    ]},
+    { q: "你家里的物品？", dim: 'j', a: [
+        { t: "经常找不到东西", v: -2 },
+        { t: "知道大概在哪，但摆放随性", v: -1 },
+        { t: "大部分都有固定位置", v: 1 },
+        { t: "所有物品都“断舍离”并标签化", v: 2 }
+    ]},
+    { q: "做饭时？", dim: 'j', a: [
+        { t: "打开冰箱看有什么，即兴创作", v: -2 },
+        { t: "按菜谱做，但会随意改动", v: -1 },
+        { t: "基本按菜谱，但分量凭感觉", v: 1 },
+        { t: "严格按照菜谱，精确到克", v: 2 }
+    ]},
+    { q: "你喜欢？", dim: 'j', a: [
+        { t: "保留所有选项", v: -2 },
+        { t: "不喜欢太快做决定", v: -1 },
+        { t: "喜欢把事情敲定", v: 1 },
+        { t: "迅速做决定，然后推进", v: 2 }
+    ]}
+];
+
+
+// 2. 8种灵魂原型 (结果文案 - 6模块版)
+const personalityTypes = {
+    "IFP": {
+        title: "✨ 灵魂漫游者 (IFP) ✨",
+        analysis: `<p><strong>【能量场：内倾】</strong>你是一个典型的“社交耗电体”。你的能量源于内部，高质量的独处是你的充电桩。</p><p><strong>【决策轴：感性】</strong>你拥有极强的共情力和同理心，做决定时，你更遵从内心的价值观和感受，而非冰冷的逻辑。</p><p><strong>【生活态：随性】</strong>你热爱自由，讨厌被规则束缚。你享受探索和当下的体验，计划对你来说更像是一个“参考”。</p>`,
+        description: `<p>你是人群中“最安静的理想主义者”。你像一个“灵魂漫游者”，用你敏感的触角去感知这个世界的美与痛。</p><p>你拥有一个极其丰富的内心世界，里面充满了各种奇思妙想和丰沛的情感，但你很少向外展示。别人看你总是温柔、随和，甚至有点“佛系”，但只有你自己知道，你内心对“真、善、美”有着多么偏执的追求。</p><p>你的敏感是你的天赋，让你能共情他人、理解艺术。但也让你容易受伤。你最大的课题，是在这个坚硬的现实世界中，如何保护好你那颗柔软、滚烫的心。</p>`,
+        love: `<p>你是“灵魂伴侣”的忠实追求者。你渴望的不是物质或形式，而是“懂”。</p><p>你讨厌被束缚和控制，在关系中需要大量的个人空间。你有点“被动”，不擅长主动出击，但一旦确认了心意，你会非常忠诚和包容。能打开你心防的人，会看到一个极其有趣和深情的灵魂。</p>`,
+        work: `<p>你是“独立的创意者”。你极其厌恶僵化的流程和“办公室政治”。</p><p>你适合在自由、宽松、有创造性的环境中工作（如艺术、写作、咨询）。你不是天生的管理者，而是那个提供“颠覆性”灵感的幕后高手。给你足够的空间，你能爆发出惊人的创造力。</p>`,
+        kit: `<ul><li><strong>[情绪结界]</strong>：你太容易吸收他人的负能量。请学会“课题分离”，这是你的情绪，那是他的情绪，不要混淆。</li><li><strong>[灵感捕捉]</strong>：随身携带一个小本子，你的“随性”会带来很多灵感，把它们记下来，这是你的宝藏。</li><li><strong>[温柔的拒绝]</strong>：你很难拒绝别人。请练习说“我需要考虑一下”，而不是立刻答应。</li></ul>`
+    },
+    "IFJ": {
+        title: "✨ 谧境守护者 (IFJ) ✨",
+        analysis: `<p><strong>【能量场：内倾】</strong>你安静而内敛，更喜欢深入、一对一的交流。独处是你恢复能量的唯一方式。</p><p><strong>【决策轴：感性】</strong>你极度体贴，总是优先照顾他人的感受。你做决定的核心是“和谐”，并坚守自己的价值观。</p><p><strong>【生活态：计划】</strong>你喜欢秩序、结构和计划。一个可预期的未来让你感到安全，你总是那个默默为大家安排好一切的人。</p>`,
+        description: `<p>你就是我们常说的<strong>“深海系女孩”</strong>。你就像一个“谧境守护者”，用你强大的责任心和同理心，默默守护着你珍视的人和事。</p><p>你拥有超强的同理心和洞察力，能轻易察觉到他人忽略的细节和情绪。但这份敏感也让你容易“社交耗电”，比起热闹，你更渴望高质量的独处和能触及灵魂的深度对话。</p><p>你的内心世界就像一片静谧的深海。别人看你总是沉静、独立，甚至有点神秘，但只有你自己知道，海底蕴藏着多么丰富的责任感和深刻的思考。你的通透和深度，是你最独特的气质。</p>`,
+        love: `<p>你是“付出型”的伴侣，温暖、忠诚且极其可靠。你寻找的是“稳定和安全感”。</p><p>你不太会说甜言蜜语，但你会用“行动”来表达爱（比如记住对方的一切喜好）。你非常恋旧，但也容易在关系中“过度付出”而委屈自己。你害怕冲突，总是默默消化一切。</p>`,
+        work: `<p>你是“靠谱的执行者”。你有极强的责任心和条理性，是团队中最值得信赖的基石。</p><p>你适合在有结构、目标明确的环境中工作（如医疗、教育、HR）。你讨厌混乱和“画大饼”。你不是激进的变革者，而是那个确保一切平稳运行的“定海神针”。</p>`,
+        kit: `<ul><li><strong>[设置边界]</strong>：你是天生的“奉献者”，但也最容易被消耗。请把“照顾好自己”放在第一位。</li><li><strong>[秩序的疗愈]</strong>：当你内心混乱时，去整理房间或做一份详细的计划。秩序感能让你快速平静。</li><li><strong>[表达需求]</strong>：不要总等着别人来“懂”你，学会主动说出“我希望你...”，这对你很重要。</li></ul>`
+    },
+    "ITP": {
+        title: "✨ 逻辑炼金士 (ITP) ✨",
+        analysis: `<p><strong>【能量场：内倾】</strong>你享受独处，在自己的精神世界里最自在。你对社交的兴趣不大，除非是深度的思想交流。</p><p><strong>【决策轴：理性】</strong>你是天生的“逻辑派”。你对事物如何运作充满好奇，擅长分析和拆解问题，追求客观和真相。</p><p><strong>【生活态：随性】</strong>你喜欢灵活和开放的系统，讨厌僵化的规则。你乐于探索新奇事物，总能找到“最优解”。</p>`,
+        description: `<p>你是一个“逻辑炼金士”，一个隐藏在安静外表下的“问题解决专家”。你可能话不多，但大脑一直在高速运转，分析一切。</p><p>你对这个世界充满好奇，但你的好奇心不在“人情世故”，而在“事物原理”。你享受拆解复杂系统、找到事物本质的乐趣。你极度独立，甚至有点特立独行。</p><p>你看似随性，但内心有自己的一套严密逻辑。你不喜欢被管束，也懒得去管别人。对你来说，最大的挑战是如何将你的“天才想法”在现实中落地，以及...偶尔学着理解一下“非理性”的人类情感。</p>`,
+        love: `<p>你是“精神独立”的伴侣。你不太需要“腻歪”，更看重“智力上的匹配”和“思维的同步”。</p><p>你不太会表达情感，甚至显得有点“冷漠”，但你很真诚。你希望伴侣和你一样独立。你讨厌“作”和“情绪化”，但如果你愿意花时间去“分析”对方，你会是很棒的伴侣。</p>`,
+        work: `<p>你是“顶级的分析师”。你天生就是解决难题的。你适合当“技术专家”或“架构师”。</p><p>你讨厌繁琐的流程和管理。你不在乎“晋升”，只在乎“这个问题有没有趣”。在灵活、自主的环境下（如科研、编程、金融分析），你的逻辑能力无人能及。</p>`,
+        kit: `<ul><li><strong>[知识变现]</strong>：你的分析能力是你的王牌。试着将你的深度思考输出为文字或作品，别让它们只停在脑海里。</li><li><strong>[容忍“不完美”</strong>]：你的“随性”有时会变成“拖延”，因为你想得太多。试着接受“先完成再完美”。</li><li><strong>[情感翻译器]</strong>：当你无法理解他人的情绪时，试着把它当做一个“逻辑题”去分析：“他这样做的底层需求是什么？”</li></ul>`
+    },
+    "ITJ": {
+        title: "✨ 冰原筑梦师 (ITJ) ✨",
+        analysis: `<p><strong>【能量场：内倾】</strong>你是一个战略性的独处者。你安静地观察，在内心构建你的宏伟蓝图。</p><p><strong>【决策轴：理性】</strong>你极度独立、理性、且客观。你是“人间清醒”的代名词，永远以逻辑和效率为准绳。</p><p><strong>【生活态：计划】</strong>你是“计划”的信徒。你讨厌混乱和失控，你会为所有事情制定A、B、C计划，执行力极强。</p>`,
+        description: `<p>你就是行走的“大女主”，一个“冰原筑梦师”。你的外表可能如冰原般冷静，但内心却燃烧着实现目标的熊熊烈火。</p><p>你是最独立的人格之一，你的安全感100%来自于自己的能力和计划。你从不感情用事，你看重事实、效率和结果。在别人眼中，你超级靠谱，但也可能显得“太强势”或“不近人情”。</p><p>你最大的驱动力是“掌控”和“成就”。你最大的挑战，是学会在你坚不可摧的逻辑堡垒中，为“情感”和“意外”留出一扇小小的窗。</p>`,
+        love: `<p>你是“忠诚的建设者”。在感情中，你依然看重“效率”和“目标”。</p><p>你不会轻易进入一段关系，但一旦选定，你会像执行项目一样去“经营”它。你非常忠诚，但也显得强势，希望对方能跟上你的步伐。你需要学会的是，爱不是一个“任务”，而是一个“过程”。</p>`,
+        work: `<p>你是“战略制定者”。你有天生的“老板”思维。你擅长制定长远规划并坚决执行。</p><p>你适合做管理、法律、金融或任何需要“精密系统”的工作。你对自己和他人都要求极高，是团队的“定盘星”。你必须学会“放权”和“容错”，否则会累死自己。</p>`,
+        // *** 这里是修复的地方！***
+        kit: `<ul><li><strong>[学会“示弱”]</strong>：你总是大包大揽。偶尔把不重要的任务分出去，不是你“不行”，而是你“会管理”。</li><li><strong>[“无用”时间表]</strong>：在你的J计划表里，专门留出“什么也不做”的时间。这对你的精神放松至关重要。</li><li><strong>[称赞练习]</strong>：你有高标准，但试着每天称赞一个“不够完美但已尽力”的人（包括你自己）。</li></ul>`
+    },
+    "EFP": {
+        title: "✨ 焰火创意家 (EFP) ✨",
+        analysis: `<p><strong>【能量场：外倾】</strong>你是人群中的“小太阳”，和人互动让你充满电。你讨厌一成不变，热爱新奇体验。</p><p><strong>【决策轴：感性】</strong>你热情、富有同理心，能轻易点燃他人的情绪。你坚信自己的价值观，并希望能感染世界。</p><p><strong>【生活态：随性】</strong>你是典型的“体验派”！你活在当下，充满好奇心，享受生命的无限可能，计划总是赶不上变化。</p>`,
+        description: `<p>你就是行走的“快乐多巴胺”，一个灿烂的“焰火创意家”。你的存在，就是为了体验和创造，并把这份热情传染给所有人。</p><p>你拥有超强的感染力，是天生的气氛担当。你对世界永远好奇，什么都想试试。你的脑袋里充满了各种新点子，但也因此容易“三分钟热度”。</p><p>你看起来是“元气系女孩”，但你的内心比别人想的更深刻。你渴望与人建立“灵魂的连接”。你最大的挑战，是如何在“什么都想要”的兴奋中，找到一件“真正想坚持”的事，并把它做完。</p>`,
+        love: `<p>你是“热烈的体验者”。你的爱像烟花一样灿烂，和你在一起永远不会无聊。</p><p>你追求“新鲜感”和“激情”，但也因此容易“上头快，下头也快”。你非常需要被“看见”和“肯定”。你需要一个能欣赏你的热情，又能给你带来“稳定感”的伴侣。</p>`,
+        work: `<p>你是“灵感发动机”。你天生适合做“与人打交道”的创意工作（如公关、市场、策划）。</p><p>你讨厌枯燥的重复劳动，你的价值在于“从0到1”的创意爆发。但你可能缺乏“从1到100”的耐心。你需要一个J型（计划型）队友来帮你落地执行。</p>`,
+        kit: `<ul><li><strong>[承诺最小化]</strong>：你的热情让你答应太多。学会只承诺“一件事”，完成后再开始下一件，对抗“三分钟热度”。</li><li><strong>[独处充电]</strong>：作为EFP，你也需要独处来“消化”你的情感和体验。每周给自己安排一次安静的“内观”时间。</li><li><strong>[把无聊当朋友]</strong>：你总在寻找刺激。试着忍受10分钟的“无聊”，你最棒的创意往往在此时诞生。</li></ul>`
+    },
+    "EFJ": {
+        title: "✨ 暖阳共情者 (EFJ) ✨",
+        analysis: `<p><strong>【能量场：外倾】</strong>你从“人”中获取能量。你热衷于组织活动，与人协作，并享受成为群体的一份子。</p><p><strong>【决策轴：感性】</strong>你是天生的“照顾者”。你极度擅长感知他人的需求和情绪，并以“和谐”为最高准则。</p><p><strong>【生活态：计划】</strong>你喜欢井井有条的社交生活。你会把朋友的生日都记在日程表上，你希望一切都在温暖的掌控中。</p>`,
+        description: `<p>你是一个“暖阳共情者”，是朋友圈里的“组织委员”和“知心姐姐”。你有强大的亲和力和组织能力，能把一群人凝聚在一起。</p><p>你天生就懂得如何“处理人际关系”，你总是能敏锐地发现谁不开心了，并主动去调和。你渴望被他人“需要”，并在帮助他人中找到自己的价值。</p><p>但这也是你最大的软肋：你太在意别人的看法，甚至不惜牺牲自己的需求去迎合他人。你害怕冲突，害怕被孤立。你的课题，是如何在照亮别人的同时，别忘了给自己留一束光。</p>`,
+        love: `<p>你是“滋养型”伴侣。你擅长营造“家”的温暖，把对方照顾得无微不至。</p><p>你渴望和谐、稳定的长期关系。你非常在意伴侣的感受，是完美的“倾听者”。但你必须警惕“控制欲”，你对“秩序”和“和谐”的追求，有时会变成对伴侣的“改造”。</p>`,
+        work: `<p>你是“团队粘合剂”。你是天生的HR、教师、公关或团队Leader。</p><p>你擅长调动情绪、凝聚人心。你关心“人”胜过关心“事”。你最大的价值是建立一个“有爱”的团队。但你需要警惕“公私不分”和“耳根子软”，在需要做艰难决定时会非常痛苦。</p>`,
+        kit: `<ul><li><strong>[需求自检]</strong>：在为别人做事之前，停3秒钟问自己：“这是他真的需要，还是我‘觉得’他需要？”</li><li><strong>[接受冲突]</strong>：你要明白，“冲突”不等于“关系破裂”，而是“解决问题”的开始。不要害怕。</li><li><strong>[自我肯定]</strong>：你的价值不需要别人的“点赞”来证明。每天写下3件“为自己而做”的小事。</li></ul>`
+    },
+    "ETP": {
+        title: "✨ 激流破局者 (ETP) ✨",
+        analysis: `<p><strong>【能量场：外倾】</strong>你充满活力，喜欢在行动和挑战中学习。你是天生的“玩家”，享受与人辩论和头脑风暴。</p><p><strong>【决策轴：理性】</strong>你机智、敏捷、且极度理性。你总能发现系统中的漏洞，并找到“破局”的最优路径。</p><p><strong>【生活态：随性】</strong>你拥抱变化，甚至主动“制造”变化。你讨厌一成不变，是天生的“冒险家”，总在寻找下一个刺激点。</p>`,
+        description: `<p>你是一个“激流破局者”，一个聪明、大胆的“冒险家”。你的人生信条就是“Just do it”和“Why not?”</p><p>你反应奇快，总能一针见血地指出问题所在。你享受挑战权威和解决高难度问题，规则在你眼里就是用来“打破”的。你充满魅力，能言善辩，但也可能因为“太直接”而无意中得罪人。</p><p>你活在当下，追求效率和刺激，这让你在很多领域都能快速成功。但你最大的挑战是“坚持”。当一个项目进入枯燥的维护期，你可能就已奔向下一个“战场”。</p>`,
+        love: `<p>你是“有趣的挑战者”。你的伴侣必须“聪明”且“跟得上你”。</p><p>你风趣幽默，但也极度“慕强”。你讨厌“笨”和“情绪化”。你享受“辩论”，但这在伴侣看来可能是“抬杠”。你需要一个能和你“玩”到一起，又能在精神上“压住”你的人。</p>`,
+        work: `<p>你是“颠覆性的创新者”。你天生适合做“创业者”、“辩手”或“危机公关”。</p><p>你就是那个“鲶鱼”，能激活整个团队。你擅长在混乱中找到出路。但你极其讨厌“流程”和“汇报”。你无法忍受“愚蠢”的领导，你宁愿单干。</p>`,
+        kit: `<ul><li><strong>[“枯燥”忍耐力]</strong>：你很强，但你需要“坚持”。找一个J型（计划型）队友，或者用“游戏化”的方式激励自己度过枯燥期。</li><li><strong>[“钝感”发言]</strong>：在指出别人的逻辑漏洞前，先肯定对方的优点。这对你的人际关系有奇效。</li><li><strong>[风险评估]</strong>：你太爱冒险。在做重大决定前，强迫自己写下“最坏的三个结果”并确保自己能承受。</li></ul>`
+    },
+    "ETJ": {
+        title: "✨ 秩序领航员 (ETJ) ✨",
+        analysis: `<p><strong>【能量场：外倾】</strong>你是天生的领导者。你喜欢组织和调动资源，在带领团队达成目标时最有能量。</p><p><strong>【决策轴：理性】</strong>你果断、坚决、以目标为导向。你做决定只看“效率”和“逻辑”，是公正的“指挥官”。</p><p><strong>【生活态：计划】</strong>你的人生字典里没有“混乱”。你擅长构建系统和流程，一切都要在你的掌控之中。</p>`,
+        description: `<p>你是一个天生的“秩序领航员”，一个高效的“指挥官”。你来到这个世界，仿佛就是为了“搞定一切”。</p><p>你拥有强大的气场和组织能力，是团队中最可靠的核心。你雷厉风行，讨厌低效和“感情用事”。你总是能快速制定计划，并带领大家往前冲。</p><p>你坚信“只要努力，一切皆可达成”。但这也让你容易成为“控制狂”，对他人的低效和失误缺乏耐心。你最大的挑战，是认识到“人”不是你计划表里的“资源”，而是有血有肉的个体。</p>`,
+        love: `<p>你是“Power Couple”的践行者。你寻找的是“队友”，而不是“宠物”。</p><p>你希望你的伴侣和你一样目标明确、积极上进。你会在关系中“主导”一切，把两人的生活都规划好。你必须学会“放松”，不要把“开会”的习惯带回家。</p>`,
+        work: `<p>你是“天生的CEO”。你就是来做“管理”和“决策”的。你擅长指挥、分配任务和推进时间线。</p><p>你无法忍受“低效”和“混乱”。你以“结果”为导向，是老板最爱的员工，也是下属“最怕”的领导。你最大的成长，是学会“对人不对事”，多一些“同理心”。</p>`,
+        kit: `<ul><li><strong>[学会“放权”]</strong>：你要的不是“把事做对”，而是“把事做成”。把任务交给别人，即使他们做得没你快，也要学会放手。</li><li><strong>[倾听“无效”信息]</strong>：和下属/朋友聊天时，克制住“说重点”的冲动。多听听那些“无效”的情感废话。</li><li><strong>[强制休息]</strong>... 别看了，就是你，你就是个工作狂。请把“休息”和“放松”也当做“必须完成的任务”写进你的J计划表里。</li></ul>`
+    }
+};
+
+// 3. 全局变量
+let currentQuestionIndex = 0;
+let scores = { e: 0, t: 0, j: 0 }; // E, T, J 的得分
+let shuffledQuestions = [];
+
+// 4. DOM 元素
+const startScreen = document.getElementById('start-screen');
+const quizScreen = document.getElementById('quiz-screen');
+const resultScreen = document.getElementById('result-screen');
+const progressText = document.getElementById('progress-text');
+const progressBar = document.getElementById('progress-bar');
+const questionContainer = document.getElementById('question-container');
+
+// 5. 核心函数
+
+// 随机打乱数组 (Fisher-Yates 算法)
+function shuffle(array) {
+    let currentIndex = array.length, randomIndex;
+    while (currentIndex != 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+    return array;
+}
+
+// 开始测试
+function startQuiz() {
+    shuffledQuestions = shuffle([...questions]); // 复制并打乱题库
+    currentQuestionIndex = 0;
+    scores = { e: 0, t: 0, j: 0 };
+    
+    startScreen.style.display = 'none';
+    resultScreen.style.display = 'none';
+    quizScreen.style.display = 'block';
+    
+    showQuestion();
+}
+
+// 显示题目 (逐题)
+function showQuestion() {
+    if (currentQuestionIndex >= shuffledQuestions.length) {
+        calculateResult();
+        return;
+    }
+
+    const q = shuffledQuestions[currentQuestionIndex];
+    
+    questionContainer.classList.remove('fade-in');
+    questionContainer.classList.add('fade-out');
+    
+    setTimeout(() => {
+        const progressPercent = ((currentQuestionIndex) / shuffledQuestions.length) * 100;
+        progressBar.style.width = progressPercent + '%';
+        progressText.innerText = `进度: ${currentQuestionIndex + 1} / ${shuffledQuestions.length}`;
+
+        // 构建4选项HTML
+        let optionsHTML = '<div class="options-grid">';
+        q.a.forEach((option, index) => {
+            // 将分数对象转为字符串
+            const scoreStr = JSON.stringify({ [q.dim]: option.v });
+            optionsHTML += `<button class="option-btn" onclick='selectAnswer(${scoreStr})'>${option.t}</button>`;
+        });
+        optionsHTML += '</div>';
+
+        questionContainer.innerHTML = `<p class="question-text">${q.q}</p>${optionsHTML}`;
+        
+        questionContainer.classList.remove('fade-out');
+        questionContainer.classList.add('fade-in');
+
+    }, 300);
+}
+
+// 选择答案
+function selectAnswer(answerScore) {
+    if (answerScore.e) scores.e += answerScore.e;
+    if (answerScore.t) scores.t += answerScore.t;
+    if (answerScore.j) scores.j += answerScore.j;
+
+    currentQuestionIndex++;
+    showQuestion();
+}
+
+// 计算并显示结果
+function calculateResult() {
+    // 1. 生成结果代码 (e.g., "IFP", "ETJ")
+    let resultCode = "";
+    resultCode += (scores.e >= 0) ? "E" : "I"; // 0分界定为E
+    resultCode += (scores.t >= 0) ? "T" : "F"; // 0分界定为T
+    resultCode += (scores.j >= 0) ? "J" : "P"; // 0分界定为J
+    
+    const result = personalityTypes[resultCode];
+
+    // 2. 渲染结果页
+    document.getElementById('result-title').innerText = result.title;
+    document.getElementById('result-analysis').innerHTML = result.analysis;
+    document.getElementById('result-description').innerHTML = result.description;
+    document.getElementById('result-love').innerHTML = result.love;
+    document.getElementById('result-work').innerHTML = result.work;
+    document.getElementById('result-kit').innerHTML = result.kit;
+    
+    // 3. 渲染光谱图
+    renderSpectrumChart(scores);
+
+    // 4. 切换屏幕
+    quizScreen.style.display = 'none';
+    resultScreen.style.display = 'block';
+    window.scrollTo(0, 0); // 滚动到页面顶部
+}
+
+// 渲染光谱图 (CSS)
+function renderSpectrumChart(scores) {
+    const chartContainer = document.getElementById('spectrum-chart');
+    
+    // 15道题, 每题-2到+2. 总范围-30到+30.
+    const totalRange = 30; 
+    
+    // (score + totalRange) / (totalRange * 2) * 100
+    const ePercent = Math.max(0, Math.min(100, ((scores.e + totalRange) / (totalRange * 2)) * 100));
+    const tPercent = Math.max(0, Math.min(100, ((scores.t + totalRange) / (totalRange * 2)) * 100));
+    const jPercent = Math.max(0, Math.min(100, ((scores.j + totalRange) / (totalRange * 2)) * 100));
+    
+    const eLabel = (ePercent).toFixed(0) + "% 外倾 (E)";
+    const tLabel = (tPercent).toFixed(0) + "% 理性 (T)";
+    const jLabel = (jPercent).toFixed(0) + "% 计划 (J)";
+
+    chartContainer.innerHTML = `
+        <div class="spectrum-item">
+            <div class="spectrum-label">
+                <span class="dim-name">内倾 (I)</span>
+                <span class="dim-value">${eLabel}</span>
+                <span class="dim-name">外倾 (E)</span>
+            </div>
+            <div class="spectrum-bar-bg">
+                <div class="spectrum-bar-fill" data-dim="e" style="width: ${ePercent}%;"></div>
+            </div>
+        </div>
+        <div class="spectrum-item">
+            <div class="spectrum-label">
+                <span class="dim-name">感性 (F)</span>
+                <span class="dim-value">${tLabel}</span>
+                <span class="dim-name">理性 (T)</span>
+            </div>
+            <div class="spectrum-bar-bg">
+                <div class="spectrum-bar-fill" data-dim="t" style="width: ${tPercent}%;"></div>
+            </div>
+        </div>
+        <div class="spectrum-item">
+            <div class="spectrum-label">
+                <span class="dim-name">随性 (P)</span>
+                <span class="dim-value">${jLabel}</span>
+                <span class="dim-name">计划 (J)</span>
+            </div>
+            <div class="spectrum-bar-bg">
+                <div class="spectrum-bar-fill" data-dim="j" style="width: ${jPercent}%;"></div>
+            </div>
+        </div>
+    `;
+}
+
+// 新增：重新测试函数
+function restartQuiz() {
+    // 切换回开始屏幕，并重置滚动条
+    startScreen.style.display = 'block';
+    resultScreen.style.display = 'none';
+    quizScreen.style.display = 'none';
+    window.scrollTo(0, 0); 
+}
+
+</script>
+
+</body>
+</html>
